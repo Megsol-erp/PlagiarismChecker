@@ -1,0 +1,79 @@
+================================================================================
+                    RAILWAY ENVIRONMENT VARIABLES
+                Copy these to Railway Dashboard → Variables
+================================================================================
+
+1. DATABASE_URL
+   Already set: ${{ Postgres.DATABASE_URL }}
+   Status: ✅ DONE
+
+2. SECRET_KEY
+   Value: ZA7BxblXrMcqHAK6hGCWlxyypxlYfEtiZLIv1hYx3Uw
+   Status: ⚠️ ADD THIS
+
+3. JWT_SECRET_KEY
+   Value: sp_H4SHnk5tAe6ImMvk5_0W80w3AssncHfUgXkX7dZE
+   Status: ⚠️ ADD THIS
+
+4. GROQ_API_KEY
+   Value: gsk_YOUR_GROQ_API_KEY_FROM_RAILWAY_VARIABLES
+   Status: ✅ DONE
+
+5. ADMIN_EMAIL
+   Value: admin@resgov.org
+   Status: ⚠️ ADD THIS
+
+6. ADMIN_PASSWORD
+   Value: SecureAdmin2024!
+   Status: ⚠️ ADD THIS (Change to your own password!)
+
+7. FLASK_ENV (Optional)
+   Value: production
+   Status: ⏭️ OPTIONAL
+
+================================================================================
+                            QUICK INSTRUCTIONS
+================================================================================
+
+1. Go to: https://railway.app/project/[YOUR_PROJECT]/service/[YOUR_SERVICE]
+2. Click "Variables" tab
+3. Add the 4 missing variables above (items #2, #3, #5, #6)
+4. Railway will automatically redeploy
+5. Wait 3-4 minutes for build to complete
+6. Run: railway run python run_migration.py
+7. Update API_URL in frontend files to your Railway domain
+8. Test at: https://your-app.railway.app/static/index.html
+
+================================================================================
+                        FIXES APPLIED
+================================================================================
+
+✅ Fixed Pillow dependency (10.1.0 → 10.4.0)
+✅ Fixed OpenCV (opencv-python → opencv-python-headless 4.10.0.84)
+✅ Fixed numpy version (1.26.4)
+✅ Added bcrypt version (4.1.2)
+✅ Added pyopenssl version (24.0.0)
+✅ Created Procfile for Gunicorn
+✅ Created runtime.txt for Python 3.11.9
+✅ Fixed DATABASE_URL handling for Railway
+✅ Pushed all changes to GitHub
+
+================================================================================
+                        DEPLOYMENT STATUS
+================================================================================
+
+GitHub: ✅ Code pushed successfully
+Railway: ⏳ Waiting for you to add environment variables
+Build: ⏳ Will start automatically after variables are added
+Database: ✅ PostgreSQL connected
+Migration: ⏳ Run after first successful deployment
+
+================================================================================
+
+Your application will be live at:
+https://[your-service-name].up.railway.app
+
+After adding variables and deployment completes, update the API_URL in your
+HTML files and commit again.
+
+================================================================================
