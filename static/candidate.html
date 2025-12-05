@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResGov - Candidate Dashboard</title>
+    <link rel="icon" type="image/png" href="logo-light.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-teal: #2D9596;
+            --primary-dark: #1A5F63;
+            --primary-light: #4DB8BC;
+            --accent-teal: #80CBC4;
+            --bg-light: #F5F9FA;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --white: #FFFFFF;
+            --border: #E2E8F0;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .brand {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-teal);
+            line-height: 1;
+        }
+        
+        .brand-role {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .logout-btn {
+            background: var(--white);
+            color: var(--primary-teal);
+            border: 1.5px solid var(--primary-teal);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background: var(--primary-teal);
+            color: var(--white);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        
+        .page-subtitle {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+        }
+        
+        .card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .exam-card {
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .exam-card:hover {
+            border-color: var(--primary-teal);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .exam-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        
+        .exam-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--primary-teal);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        
+        .badge-info {
+            background: #DBEAFE;
+            color: #2563EB;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .exam-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .exam-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .exam-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .exam-meta {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .btn-start {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-start:hover {
+            background: #5568d3;
+        }
+        
+        .btn-start:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎓 Candidate Dashboard</h1>
+        <div>
+            <span id="candidateName"></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Available Exams</h2>
+            <div id="examsList"></div>
+        </div>
+        
+        <div class="card">
+            <h2>My Results</h2>
+            <div id="resultsList"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://192.168.29.133:5000/api';
+        let token = localStorage.getItem('token');
+        
+        if (!token) {
+            window.location.href = 'index.html';
+        }
+        
+        async function loadUserInfo() {
+            try {
+                const response = await fetch(`${API_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('candidateName').textContent = user.full_name;
+                    
+                    // Redirect admins to admin portal
+                    if (user.is_admin) {
+                        window.location.href = 'admin.html';
+                        return;
+                    }
+                } else {
+                    logout();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function loadExams() {
+            try {
+                const response = await fetch(`${API_URL}/exam/available`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const exams = await response.json();
+                const container = document.getElementById('examsList');
+                container.innerHTML = '';
+                
+                if (exams.length === 0) {
+                    container.innerHTML = '<p style="color: #666;">No exams available at the moment.</p>';
+                    return;
+                }
+                
+                exams.forEach(exam => {
+                    const examCard = document.createElement('div');
+                    examCard.className = 'exam-card';
+                    examCard.innerHTML = `
+                        <div class="exam-info">
+                            <h3>${exam.title}</h3>
+                            <p>${exam.description || 'No description'}</p>
+                            <div class="exam-meta">
+                                ⏱️ ${exam.duration_minutes} minutes | 
+                                📝 ${exam.question_count} questions | 
+                                🎯 Passing: ${exam.passing_score}%
+                                ${exam.already_taken ? '<span class="badge badge-success">Already Taken</span>' : ''}
+                            </div>
+                            ${exam.proctoring_enabled.video_monitoring ? '<div class="badge badge-info">📹 Video Proctored</div>' : ''}
+                        </div>
+                        <button class="btn-start" onclick="startExam(${exam.id})" ${exam.already_taken ? 'disabled' : ''}>
+                            ${exam.already_taken ? 'Completed' : 'Start Exam'}
+                        </button>
+                    `;
+                    container.appendChild(examCard);
+                });
+            } catch (error) {
+                console.error('Error loading exams:', error);
+            }
+        }
+        
+        async function loadResults() {
+            try {
+                const response = await fetch(`${API_URL}/exam/my-results`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const results = await response.json();
+                const container = document.getElementById('resultsList');
+                container.innerHTML = '';
+                
+                if (results.length === 0) {
+                    container.innerHTML = '<p style="color: #666;">No exam results yet.</p>';
+                    return;
+                }
+                
+                results.forEach(result => {
+                    const resultCard = document.createElement('div');
+                    resultCard.className = 'exam-card';
+                    resultCard.innerHTML = `
+                        <div class="exam-info">
+                            <h3>${result.exam_title}</h3>
+                            <div class="exam-meta">
+                                Score: ${result.percentage ? result.percentage.toFixed(1) : 'N/A'}% | 
+                                Status: <span class="badge badge-${result.passed ? 'success' : 'warning'}">${result.passed ? 'Passed' : 'Failed'}</span>
+                                <br>
+                                Submitted: ${new Date(result.submitted_at).toLocaleString()}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(resultCard);
+                });
+            } catch (error) {
+                console.error('Error loading results:', error);
+            }
+        }
+        
+        async function startExam(examId) {
+            if (!confirm('Are you ready to start the exam? Once started, you must complete it within the time limit.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/exam/${examId}/start`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('examSession', JSON.stringify(data));
+                    window.location.href = 'exam.html';
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Could not start exam');
+                }
+            } catch (error) {
+                console.error('Error starting exam:', error);
+                alert('Failed to start exam. Please try again.');
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('is_admin');
+            window.location.href = 'index.html';
+        }
+        
+        // Initialize
+        loadUserInfo();
+        loadExams();
+        loadResults();
+    </script>
+</body>
+</html>

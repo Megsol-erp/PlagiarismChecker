@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResGov - Exam Proctoring System</title>
+    <link rel="icon" type="image/png" href="logo-light.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-teal: #2D9596;
+            --primary-dark: #1A5F63;
+            --primary-light: #4DB8BC;
+            --accent-teal: #80CBC4;
+            --bg-light: #F5F9FA;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px -1px rgba(45, 149, 150, 0.1), 0 2px 4px -1px rgba(45, 149, 150, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(45, 149, 150, 0.1), 0 10px 10px -5px rgba(45, 149, 150, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand-tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+        
+        .container {
+            background: var(--white);
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #E2E8F0;
+            gap: 4px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab:hover {
+            color: var(--primary-teal);
+        }
+        
+        .tab.active {
+            color: var(--primary-teal);
+            border-bottom-color: var(--primary-teal);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+        }
+        
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 0 3px rgba(45, 149, 150, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-teal);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .error-message {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #DC2626;
+        }
+        
+        .success-message {
+            background: #D1FAE5;
+            color: #059669;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #059669;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+        
+        .footer a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 24px;
+            }
+            
+            .brand-name {
+                font-size: 28px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="logo-container">
+            <img src="logo-light.png" alt="ResGov Logo" class="logo" onerror="this.style.display='none'">
+            <div class="brand-name">ResGov</div>
+            <div class="brand-tagline">Secure Exam Proctoring System</div>
+        </div>
+        
+        <div class="container">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Admin Login</p>
+            
+            <div class="tabs">
+                <button type="button" class="tab active" onclick="switchTab('login')">Admin Login</button>
+                <button type="button" class="tab" onclick="window.location.href='apply.html'">Take Assessment</button>
+            </div>
+            
+            <div id="error" class="error-message"></div>
+            <div id="success" class="success-message"></div>
+            
+            <!-- Login Form -->
+            <div id="loginContent" class="tab-content active">
+                <form id="loginForm" onsubmit="login(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Admin Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your admin email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Sign In as Admin</button>
+                </form>
+            </div>
+            
+            <!-- Note for candidates -->
+            <div style="text-align: center; margin-top: 24px; padding: 16px; background: #EFF6FF; border-radius: 8px; border-left: 4px solid var(--primary-teal);">
+                <p style="color: var(--text-dark); font-size: 14px; margin: 0;">
+                    <strong>Candidates:</strong> Click "Take Assessment" above to begin your application and exam.
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            © 2025 ResGov. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://192.168.29.133:5000/api';
+        
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginContent').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('registerContent').classList.add('active');
+            }
+            
+            // Clear messages
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('success').style.display = 'none';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => successDiv.style.display = 'none', 5000);
+        }
+        
+        async function login(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('is_admin', data.is_admin);
+                    if (data.is_admin) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'candidate.html';
+                    }
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                showError('Connection error. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
