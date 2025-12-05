@@ -99,6 +99,8 @@ def create_admin_user(app):
         db.session.commit()
         print(f"Admin user created: {app.config['ADMIN_EMAIL']}")
 
+# Create app instance for Gunicorn
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True, host='0.0.0.0', port=5000)
